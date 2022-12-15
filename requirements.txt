@@ -1,0 +1,5 @@
+discord.py==1.7.3
+wavelink
+python-dotenv
+asyncio
+datetime
