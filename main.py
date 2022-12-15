@@ -11,7 +11,8 @@ TOKEN = os.getenv("TOKEN")
 # Main Bot
 intents=discord.Intents.all()
 intents.members = True
-bot = commands.Bot(command_prefix=".", intents=intents)
+activity = discord.Activity(name='.gg/loop', type=discord.ActivityType.watching, status=discord.Status.do_not_disturb)
+bot = commands.Bot(command_prefix=".", intents=intents, activity=activity)
 
 # Load Cogs
 for filename in os.listdir("./cogs"):

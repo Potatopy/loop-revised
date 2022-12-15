@@ -30,8 +30,9 @@ bot made by domain#0001 for .gg/loop (at least thats the future vanity)
 TOKEN=yourtokenhere
 ```
 
-4. Run the bot by running `python main.py`
-5. Enjoy!
+4. Delete all the .db files (so it creates new ones just for you!)
+5. Run the bot by running `python main.py`
+6. Enjoy!
 
 ## Links
 
