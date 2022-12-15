@@ -10,9 +10,13 @@ class Util(commands.Cog):
         print("Util Cog has been loaded.")
 
     @commands.command(description="Sends the bot's ping.")
-    @commands.has_permissions(administrator=True)
     async def ping(self, ctx):
         await ctx.send(f"Pong! {round(self.bot.latency * 1000)}ms")
+
+    @commands.command(description="Echo's a message.")
+    async def echo(self, ctx, *, message):
+        await ctx.message.delete()
+        await ctx.send(message)
 
     @commands.command(description="Loads a cog.")
     @commands.has_permissions(administrator=True)

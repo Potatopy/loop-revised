@@ -86,7 +86,7 @@ class Mod(commands.Cog):
         else:
             em = discord.Embed(color=discord.Color.random(), description=f"{snipe_message_content}")
             em.set_footer(text=f"Requested by {message.author.name}#{message.author.discriminator}")
-            em.set_author(name=f"{snipe_message_author.name}#{snipe_message_author.discriminator}", icon_url=snipe_message_author.display_avatar)
+            em.set_author(name=f"{snipe_message_author.name}#{snipe_message_author.discriminator}", icon_url=snipe_message_author.avatar_url)
             await message.channel.send(embed=em)
             return
 

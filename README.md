@@ -8,10 +8,11 @@ bot made by domain#0001 for .gg/loop (at least thats the future vanity)
 
 - Welcome system
 - An economy system (W.I.P)
-- A moderation system (need ideas lmao)
-- Anime commands (NSFW)
+- A moderation system
+- A Music system With Spotify Support
+- Anime commands (NSFW + SFW)
 - Level system
-- And Many More!
+- And Many More To Come!
 
 ## Requirements
 
