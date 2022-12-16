@@ -1,4 +1,5 @@
 # Dependencies
+import discord_ios
 import asyncio
 import discord
 import os

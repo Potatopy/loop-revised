@@ -1,8 +1,14 @@
 import datetime
 import discord
+import os
 import wavelink
 from discord.ext import commands
 from wavelink.ext import spotify
+from dotenv import load_dotenv
+
+load_dotenv()
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+CLIENT_ID = os.getenv("CLIENT_ID")
 
 class Music(commands.Cog):
     def __init__(self, bot: commands.Bot):
@@ -11,7 +17,7 @@ class Music(commands.Cog):
 
     async def node_connect(self):
         await self.bot.wait_until_ready()
-        await wavelink.NodePool.create_node(bot=self.bot, host="lavalink4africa.islantay.tk", port=8880, password="AmeliaWatsonisTheBest**!", spotify_client=spotify.SpotifyClient(client_id="b3ec1a336be5419a8f856a28c173e396", client_secret="cca55cffc7294c24a9c76285495e0a89"))
+        await wavelink.NodePool.create_node(bot=self.bot, host="lavalink4africa.islantay.tk", port=8880, password="AmeliaWatsonisTheBest**!", spotify_client=spotify.SpotifyClient(client_id=CLIENT_ID, client_secret=CLIENT_SECRET))
 
     @commands.Cog.listener()
     async def on_wavelink_node_ready(self, node: wavelink.Node):

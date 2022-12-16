@@ -4,3 +4,4 @@ python-dotenv
 asyncio
 datetime
 aiosqlite
+easy-pil

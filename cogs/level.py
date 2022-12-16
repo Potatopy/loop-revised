@@ -3,6 +3,7 @@ import asyncio
 import discord
 import random
 from discord.ext import commands
+from easy_pil import *
 
 class Level(commands.Cog):
     def __init__(self, bot):
@@ -33,7 +34,7 @@ class Level(commands.Cog):
             
             try:
                 xp = xp[0]
-                level = [0]
+                level = level[0]
             except TypeError:
                 xp = 0
                 level = 0
@@ -52,9 +53,13 @@ class Level(commands.Cog):
                 await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (0, author.id, guild.id,))
                 await message.channel.send(f"{author.mention} has leveled up to level **{level}**!")
             await self.bot.db.commit()
+            await self.bot.process_commands(message)
 
-    @commands.command(description="Shows your level", aliases=['lvl', 'rank'])
+    @commands.command(description="Shows your level", aliases=['lvl', 'rank', 'xp'])
     async def level(self, ctx, member:discord.Member=None):
+        """
+        This Command Shows Your Level + XP
+        """
         if member is None:
             member = ctx.author
         async with self.bot.db.cursor() as cursor:
@@ -65,6 +70,7 @@ class Level(commands.Cog):
 
             if not xp or not level:
                 await cursor.execute("INSERT INTO levels VALUES (?, ?, ?, ?)", (0, 0, member.id, ctx.guild.id,))
+                await self.bot.db.commit()
             
             try:
                 xp = xp[0]
@@ -73,8 +79,45 @@ class Level(commands.Cog):
                 xp = 0
                 level = 0
 
-            em = discord.Embed(title=f"{member.name}'s level", description=f"Level: `{level}`\nXP: `{xp}`", color=discord.Color.green())
-            await ctx.send(embed=em)
+            user_data = {
+                "name" : f"{member.name}#{member.discriminator}",
+                "xp" : xp,
+                "level" : level,
+                "next_level_xp" : 100,
+                "progress" : xp,
+            }
+
+            # Custom Level Card
+            background = Editor(Canvas((900, 300), color="#141414"))
+            pfp = await load_image_async(str(member.avatar_url))
+            profile = Editor(pfp).resize((150, 150)).circle_image()
+
+            # Font
+            poppins = Font.poppins(size=40)
+            poppins_small = Font.poppins(size=30)
+
+            # Card Shape
+            card_right_shape = [(600, 0), (750, 300), (900, 300), (900, 0)]
+            
+            # profile pic
+            background.polygon(card_right_shape, fill="#FFFFFF")
+            background.paste(profile, (30, 30))
+
+            # progress bar
+            background.rectangle((30, 220), width=650, height=40, color="#FFFFFF")
+            background.bar((30, 220), max_width=650, height=40, percentage=user_data["progress"], color="#FFFFFF", radius=20)
+            background.text((200, 50), user_data["name"], font=poppins, color="#FFFFFF")
+
+            # level and xp
+            background.rectangle((200, 100), width=350, height=2, fill="#FFFFFF")
+            background.text(
+                (200, 130),
+                f"Level - {user_data['level']} | XP - {user_data['xp']}/{user_data['next_level_xp']}",
+                font = poppins_small,
+                color = "#FFFFFF"
+            )
+
+            await ctx.send(file=discord.File(filename="lvl.png", fp=background.image_bytes))
 
 def setup(bot):
     bot.add_cog(Level(bot))
