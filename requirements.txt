@@ -5,3 +5,4 @@ asyncio
 datetime
 aiosqlite
 easy-pil
+git+https://github.com/dropout1337/Discord-iOS/
