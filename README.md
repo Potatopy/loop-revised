@@ -40,3 +40,5 @@ TOKEN=yourtokenhere
 [MIT](https://choosealicense.com/licenses/mit/)
 
 [Support](https://discord.gg/9j8qcsVFQX)
+
+[Documentation](https://loop-3.gitbook.io/api-docs/)

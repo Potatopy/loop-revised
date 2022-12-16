@@ -13,6 +13,11 @@ class Util(commands.Cog):
     async def ping(self, ctx):
         await ctx.send(f"Pong! {round(self.bot.latency * 1000)}ms")
 
+    @commands.command(description="Help command.")
+    async def help(self, ctx):
+        em = discord.Embed(description="commands / how to setup: [click here](https://loop-3.gitbook.io/api-docs/)")
+        await ctx.send(embed=em)
+
     @commands.command(description="Echo's a message.")
     async def echo(self, ctx, *, message):
         await ctx.message.delete()

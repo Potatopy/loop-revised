@@ -1,5 +1,4 @@
 # Dependencies
-import discord_ios
 import asyncio
 import discord
 import os
@@ -12,8 +11,8 @@ TOKEN = os.getenv("TOKEN")
 # Main Bot
 intents=discord.Intents.all()
 intents.members = True
-activity = discord.Activity(name='.gg/loop', type=discord.ActivityType.watching, status=discord.Status.do_not_disturb)
-bot = commands.Bot(command_prefix=".", intents=intents, activity=activity)
+activity = discord.Activity(name='.gg/loop', type=discord.ActivityType.watching, status=discord.Status.idle)
+bot = commands.Bot(command_prefix=".", intents=intents, activity=activity, help_command=None)
 
 # Load Cogs
 for filename in os.listdir("./cogs"):
