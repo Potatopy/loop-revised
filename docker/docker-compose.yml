@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  bot:
+    image: bot
+    build:
+      context: .
+      dockerfile: ./Dockerfile
