@@ -59,5 +59,55 @@ class Level(commands.Cog):
                     with open("db\levels.json", "r") as f:
                         json.dump(data, f)
 
+    @commands.command(aliases=['r', 'level', 'lvl', 'xp'])
+    async def rank(self, ctx, member: Optional[discord.Member]):
+        usr = user or ctx.author
+
+        with open("db/levels.json", "r") as f:
+            data = json.load(f)
+
+            xp = data[str(usr.id)]['xp']
+            lvl = data[str(usr.id)]['level']
+
+            next_lvlup_xp = (lvl+1)*100
+            xp_need = next_lvlup_xp
+            xp_have = data[str(usr.id)]['xp']
+
+            percentage = int(((xp_have*100)/xp_need))
+
+            background = await load_image_async("public/lvl/0.png")
+            profile = await load_image_async(str(usr.avatar_url))
+
+            profile = Editor(profile).resize((150, 150)).circle_image()
+
+            poppins = Font.poppins(size=40)
+            poppins_small = Font.poppins(size=30)
+
+            # img = Editor("public/lvl/zBLACK.png")
+            # background.blend(image=img, alpha=0.5, on_top=False)
+
+            background.paste(profile.image, (30, 30))
+            background.rectangle((30, 220), width=650, height=40, fill="#fff", radius=20)
+            background.bar(
+                (30, 220),
+                max_width=650,
+                height=40,
+                percentage=percentage,
+                fill="#ff9933",
+                radius=20
+            )
+            background.text((200, 40), str(usr.name), font=poppins, fill="#ff9933")
+            background.rectangle((200, 40), width350, height=2, fill="#ff9933")
+            background.text(
+                (200, 130),
+                f"Level : {lvl} "
+                + f"XP : {xp} / {(lvl+1)*100}",
+                font=poppins_small,
+                color="#ff9933"
+            )
+
+            card = File(fp=background.image_bytes, filename="rank.png")
+            await ctx.send(file=card)
+
 async def setup(bot):
     await bot.add_cog(Level(bot))
