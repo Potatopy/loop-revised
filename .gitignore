@@ -131,4 +131,4 @@ dmypy.json
 .pyre/
 
 # Miscellaneous
-imgs/
+public/emojis
