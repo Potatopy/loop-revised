@@ -15,8 +15,19 @@ class Util(commands.Cog):
 
     @commands.command()
     async def help(self, ctx):
-        em = discord.Embed(description="documentation + commands: [here](https://loop-3.gitbook.io/api-docs/)", color=discord.Color.purple())
+        em = discord.Embed(description="documentation + commands: [click](https://loop-3.gitbook.io/api-docs/)", color=discord.Color.purple())
         await ctx.send(embed=em)
+
+    @commands.command()
+    async def echo(self, ctx):
+        await ctx.send(ctx.message.content[6:])
+
+    @commands.command()
+    async def poll(self, ctx, *, message):
+        em = discord.Embed(title="Poll", description=message, color=discord.Color.purple())
+        msg = await ctx.channel.send(embed=em)
+        await msg.add_reaction("👍")
+        await msg.add_reaction("👎")
 
 async def setup(bot):
     await bot.add_cog(Util(bot))

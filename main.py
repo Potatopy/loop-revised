@@ -11,7 +11,7 @@ load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
 # Define the bot
-activity = discord.Activity(type=discord.ActivityType.competing, name=",help")
+activity = discord.Activity(type=discord.ActivityType.watching, name=",help")
 bot = commands.Bot(command_prefix=",", intents=discord.Intents.all(), activity=activity, help_command=None)
 
 # Load cogs
