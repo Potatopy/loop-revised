@@ -15,7 +15,7 @@ class Events(commands.Cog):
     async def on_member_join(self, member):
         channel = member.guild.system_channel
 
-        background = Editor("public/pic2.jpg")
+        background = Editor("public/welc/pic2.jpg")
         profile_image = await load_image_async(str(member.avatar_url))
 
         profile = Editor(profile_image).resize((150, 150)).circle_image()
