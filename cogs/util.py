@@ -19,8 +19,11 @@ class Util(commands.Cog):
         await ctx.send(embed=em)
 
     @commands.command()
-    async def echo(self, ctx):
-        await ctx.send(ctx.message.content[6:])
+    async def echo(self, ctx, *, arg = ""):
+        if arg == "":
+            await ctx.send("Please enter a message to echo")
+        else:
+            await ctx.send(arg)
 
     @commands.command()
     async def poll(self, ctx, *, message):

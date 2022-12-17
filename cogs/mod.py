@@ -11,7 +11,7 @@ class Mod(commands.Cog):
     
     @commands.Cog.listener()
     async def on_ready(self):
-        print('Mod commands are online!')
+        print('Mod Cog is ready!')
 
     @commands.Cog.listener()
     async def on_message_delete(self, message):
