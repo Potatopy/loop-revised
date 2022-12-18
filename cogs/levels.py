@@ -50,8 +50,8 @@ class LevelSys(commands.Cog):
                                 em.set_thumbnail(url=message.author.avatar_url)
                                 await message.channel.send(embed=em)
 
-    @commands.command(aliases=['lvl', 'level', 'xp', 'r', 'l'])
-    async def rank(self, ctx):
+    @commands.command()
+    async def test(self, ctx):
         if ctx.channel.id == bot_channel:
             stats = leveling.find_one({"id": ctx.author.id})
             if stats is None:
