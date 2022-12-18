@@ -77,7 +77,7 @@ class LevelSys(commands.Cog):
                         em.add_field(name="XP", value=f"{xp}/{int(200*((1/2)*lvl))}", inline=True)
                         em.add_field(name="Rank", value=f"{rank}/{ctx.guild.member_count}", inline=True)
                         em.add_field(name="Progress Bar [lvl]", value=boxes * ":blue_square:" + (20-boxes) * "white_large_square", inline=True)
-                        await ctx.channel.send(embed=em)
+                    await ctx.channel.send(embed=em)
 
     @commands.command(aliases=['lb', 'top'])
     async def leaderboard(self, ctx):
