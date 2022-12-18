@@ -79,7 +79,7 @@ class LevelSys(commands.Cog):
                         em.add_field(name="Progress Bar [lvl]", value=boxes * ":blue_square:" + (20-boxes) * "white_large_square", inline=True)
                         await ctx.channel.send(embed=em)
 
-    @commands.command(aliases=['lb', 'leaderboard', 'top'])
+    @commands.command(aliases=['lb', 'top'])
     async def leaderboard(self, ctx):
         if (ctx.channel.id == bot_channel):
             rankings = leveling.find().sort("xp", -1)
