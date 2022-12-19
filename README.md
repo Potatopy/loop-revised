@@ -10,7 +10,6 @@ bot made by domain#0001 for .gg/loop (at least thats the future vanity)
 - [] An economy system (W.I.P)
 - [x] A moderation system
 - [] Anime commands (NSFW + SFW)
-- [] Level system
 
 And Many More To Come!
 
