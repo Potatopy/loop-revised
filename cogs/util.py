@@ -14,7 +14,7 @@ class Util(commands.Cog):
     async def on_message(self, message):
         for i in range(len(self.data)):
             if (f"<@{self.data[i]}>" in message.content) and (not message.author.bot):
-                await message.channel.send(f"<@{self.data[i]}> is AFK, reason: {self.data[i+1]} ")
+                await message.channel.send(f"<@{self.data[i]}> is AFK, reason: {self.data[i+1]}")
 
     @commands.Cog.listener()
     async def on_typing(self, channel, user, when):
@@ -34,6 +34,7 @@ class Util(commands.Cog):
         await ctx.send(embed=em)
 
     @commands.command()
+    @commands.has_permissions(manage_messages=True)
     async def echo(self, ctx, *, arg = ""):
         if arg == "":
             await ctx.send("Please enter a message to echo")
@@ -41,6 +42,7 @@ class Util(commands.Cog):
             await ctx.send(arg)
 
     @commands.command()
+    @commands.has_permissions(manage_messages=True)
     async def poll(self, ctx, *, message):
         em = discord.Embed(title="Poll", description=message, color=discord.Color.purple())
         msg = await ctx.channel.send(embed=em)
