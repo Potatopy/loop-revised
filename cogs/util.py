@@ -14,12 +14,12 @@ class Util(commands.Cog):
     async def on_message(self, message):
         for i in range(len(self.data)):
             if (f"<@{self.data[i]}>" in message.content) and (not message.author.bot):
-                await message.channel.send(f"<@{self.data[i+1]}> is AFK ")
+                await message.channel.send(f"<@{self.data[i]}> is AFK, reason: {self.data[i+1]} ")
 
     @commands.Cog.listener()
     async def on_typing(self, channel, user, when):
         if user.id in self.data:
-            self.data.index(user.id)
+            i = self.data.index(user.id)
             self.data.remove(self.data[i+1])
             self.data.remove(user.id)
             await channel.send(f"Welcome back {user.mention}", delete_after=3)
@@ -52,7 +52,7 @@ class Util(commands.Cog):
         msg = ' '.join(args)
         self.data.append(ctx.author.id)
         self.data.append(msg)
-        await ctx.send("afk set", delete_after=3)
+        await ctx.send("afk set")
 
 async def setup(bot):
     await bot.add_cog(Util(bot))
