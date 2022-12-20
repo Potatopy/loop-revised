@@ -11,7 +11,7 @@ load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
 # Define the bot
-activity = nextcord.Activity(type=nextcord.ActivityType.watching, name=",help")
+activity = nextcord.Activity(type=nextcord.ActivityType.streaming, name="re-code", url="https://solo.to/wtr")
 bot = commands.Bot(command_prefix=",", intents=nextcord.Intents.all(), activity=activity, help_command=None)
 
 # Load cogs
