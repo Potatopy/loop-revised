@@ -1,9 +1,0 @@
-discord.py
-asyncio
-datetime
-aiosqlite
-easy-pil
-python-dotenv
-pymongo
-dnspython
-git+https://github.com/dropout1337/Discord-iOS/
