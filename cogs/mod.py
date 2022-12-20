@@ -1,6 +1,6 @@
-import discord
+import nextcord
 import asyncio
-from discord.ext import commands
+from nextcord.ext import commands
 
 class Mod(commands.Cog):
     def __init__(self, bot):
@@ -32,13 +32,13 @@ class Mod(commands.Cog):
 
     @commands.command(description='Kicks a member')
     @commands.has_permissions(kick_members=True)
-    async def kick(self, ctx, member:discord.Member, *, reason=None):
+    async def kick(self, ctx, member:nextcord.Member, *, reason=None):
         await member.kick(reason=reason)
         await ctx.send(f"get out {member.mention}, Reason: {reason}")
 
     @commands.command(description='Bans a member')
     @commands.has_permissions(ban_members=True)
-    async def ban(self, ctx, member:discord.Member, *, reason=None):
+    async def ban(self, ctx, member:nextcord.Member, *, reason=None):
         await member.ban(reason=reason)
         await ctx.send(f"smokin that {member.mention} pack 🚬, Reason: {reason}")
 
@@ -55,7 +55,7 @@ class Mod(commands.Cog):
 
     @commands.command(description='Locks a channel/server')
     @commands.has_permissions(manage_guild=True)
-    async def lock(self, ctx, channel:discord.TextChannel=None, setting=None):
+    async def lock(self, ctx, channel:nextcord.TextChannel=None, setting=None):
         if setting == '--server':
             for channel in ctx.guild.channels:
                 await channel.set_permissions(ctx.guild.default_role, send_messages=False)
@@ -68,7 +68,7 @@ class Mod(commands.Cog):
     
     @commands.command(description='Locks a channel/server')
     @commands.has_permissions(manage_guild=True)
-    async def unlock(self, ctx, channel:discord.TextChannel=None, setting=None):
+    async def unlock(self, ctx, channel:nextcord.TextChannel=None, setting=None):
         if setting == '--server':
             for channel in ctx.guild.channels:
                 await channel.set_permissions(ctx.guild.default_role, send_messages=True)
@@ -84,11 +84,11 @@ class Mod(commands.Cog):
         if snipe_message_content == None:
             await message.channel.send("There is nothing to snipe!")
         else:
-            em = discord.Embed(color=discord.Color.random(), description=f"{snipe_message_content}")
+            em = nextcord.Embed(color=nextcord.Color.random(), description=f"{snipe_message_content}")
             em.set_footer(text=f"Requested by {message.author.name}#{message.author.discriminator}")
             em.set_author(name=f"{snipe_message_author.name}#{snipe_message_author.discriminator}", icon_url=snipe_message_author.avatar_url)
             await message.channel.send(embed=em)
             return
 
-async def setup(bot):
-    await bot.add_cog(Mod(bot)) 
+def setup(bot):
+    bot.add_cog(Mod(bot)) 

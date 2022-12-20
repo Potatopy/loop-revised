@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 
 class Util(commands.Cog):
     def __init__(self, bot):
@@ -30,7 +30,7 @@ class Util(commands.Cog):
 
     @commands.command()
     async def help(self, ctx):
-        em = discord.Embed(description="documentation + commands: [click](https://loop-3.gitbook.io/api-docs/)", color=discord.Color.purple())
+        em = nextcord.Embed(description="documentation + commands: [click](https://loop-3.gitbook.io/api-docs/)", color=nextcord.Color.purple())
         await ctx.send(embed=em)
 
     @commands.command()
@@ -44,7 +44,7 @@ class Util(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def poll(self, ctx, *, message):
-        em = discord.Embed(title="Poll", description=message, color=discord.Color.purple())
+        em = nextcord.Embed(title="Poll", description=message, color=nextcord.Color.purple())
         msg = await ctx.channel.send(embed=em)
         await msg.add_reaction("👍")
         await msg.add_reaction("👎")
@@ -56,5 +56,5 @@ class Util(commands.Cog):
         self.data.append(msg)
         await ctx.send("afk set")
 
-async def setup(bot):
-    await bot.add_cog(Util(bot))
+def setup(bot):
+    bot.add_cog(Util(bot))

@@ -1,6 +1,6 @@
-import discord
-from discord.ext import commands
-from discord import File
+import nextcord
+from nextcord.ext import commands
+from nextcord import File
 from easy_pil import Editor, load_image_async, Font
 
 class Events(commands.Cog):
@@ -32,5 +32,5 @@ class Events(commands.Cog):
         file = File(fp=background.image_bytes, filename="welcome.png")
         await channel.send(f"Welcome {member.mention} to /loop", file=file)
 
-async def setup(bot):
-    await bot.add_cog(Events(bot))
+def setup(bot):
+    bot.add_cog(Events(bot))
