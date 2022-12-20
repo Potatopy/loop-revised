@@ -12,7 +12,7 @@ class Economy(commands.Cog):
     async def on_ready(self):
         print("Economy cog is ready!")
         await asyncio.sleep(3)
-        async with self.self.db.cursor() as cursor:
+        async with self.db.cursor() as cursor:
             await cursor.execute("CREATE TABLE IF NOT EXISTS bank (wallet INT, bank INT, maxbank INT, user INT)")
         await self.db.commit()
         print('Database1 is ready!')
