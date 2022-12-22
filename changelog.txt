@@ -1,0 +1,12 @@
+Update: v1.0.0
+
+- Initial Re-Release
+- Added Moderation Commands
+- Added Utility Commands
+- Added Fun Commands
+- Added Music Commands
+- Added Economy Commands
+- Added Leveling System
+- Added Custom Prefix
+- Added Custom Welcome Message
+- Added run.bat + run.sh for easy startup

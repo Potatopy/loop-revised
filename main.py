@@ -3,6 +3,8 @@ import discord_ios
 import nextcord
 import asyncio
 import os
+
+# Imports
 from nextcord.ext import commands
 from dotenv import load_dotenv
 
@@ -10,9 +12,9 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
-# Define the bot
-activity = nextcord.Activity(type=nextcord.ActivityType.streaming, name="re-code", url="https://solo.to/wtr")
-bot = commands.Bot(command_prefix=",", intents=nextcord.Intents.all(), activity=activity, help_command=None)
+# Set up the bot
+activity = nextcord.Activity(type=nextcord.ActivityType.watching, name=",help")
+bot = commands.Bot(command_prefix=",", intents=nextcord.Intents.all(), activity=activity, help_command=None, shard_count=1)
 
 # Load cogs
 for fn in os.listdir("./cogs"):

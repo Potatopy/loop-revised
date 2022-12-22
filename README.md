@@ -6,10 +6,11 @@ bot made by domain#0001 for .gg/loop (at least thats the future vanity)
 
 ## Features
 
-- [] Welcome system
-- [] An economy system (W.I.P)
+- [ ] Welcome system
+- [ ] An economy system (W.I.P)
 - [x] A moderation system
-- [] Anime commands (NSFW + SFW)
+- [ ] Anime commands (NSFW + SFW)
+- [ ] A music system
 
 And Many More To Come!
 
