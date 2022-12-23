@@ -11,7 +11,7 @@ class Mod(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("Mod cog is ready!")
-        setattr(self.bot, "db", await aiosqlite.connect("db/warns.db"))
+        setattr(self.bot, "db", await aiosqlite.connect("db/warn.db"))
         await asyncio.sleep(3)
         async with self.bot.db.cursor() as cursor:
             await cursor.execute("CREATE TABLE IF NOT EXISTS warns (user INT, reason TEXT, time INT, guild INT)")
