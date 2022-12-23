@@ -73,7 +73,6 @@ class Level(commands.Cog):
                         await message.channel.send(f"{author.mention} has leveled up to **{level}**. Contact an Admin to give you the role **{role.name}**!")
                 await message.channel.send(f"{author.mention} has leveled up to level **{level}**!")
             await self.bot.db.commit()
-            await self.bot.process_commands(message)
 
     @commands.command(aliases=['rank', 'lvl', 'xp'])
     async def level(self, ctx, member: nextcord.Member = None):
@@ -209,6 +208,27 @@ class Level(commands.Cog):
             await cursor.execute("INSERT INTO levelSettings VALUES (?, ?, ?, ?)", (True, role.id, level, ctx.guild.id))
             await self.bot.db.commit()
         await ctx.send(f"Added {role.mention} to level {level}!")
+
+    @commands.command(aliases=['lb', 'lvlboard'])
+    async def leaderboard(self, ctx):
+        async with self.bot.db.cursor() as cursor:
+            await cursor.execute("SELECT levelsys FROM levelSettings WHERE guild = ?", (ctx.guild.id,))
+            levelsys = await cursor.fetchone()
+            if levelsys:
+                if not levelsys[0] == 1:
+                    return await ctx.send("Leveling is disabled in this server!")
+            await cursor.execute("SELECT level, xp, user FROM levels WHERE guild = ? ORDER BY level DESC, xp DESC LIMIT 10", (ctx.guild.id,))
+            data = await cursor.fetchall()
+            if data:
+                em = nextcord.Embed(f"Leaderboard for {ctx.guild.name}")
+                count = 0
+                for table in data:
+                    count += 1
+                    user = ctx.guild.get_member(table[2])
+                    em.add_field(name=f"{count}. {user.name}", value=f"Level-**{table[0]}** | XP-**{table[1]}**", inline=False)
+                return await ctx.send(embed=em)
+            return await ctx.send("No one has leveled up yet!")
+            
 
 def setup(bot):
     bot.add_cog(Level(bot))

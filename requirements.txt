@@ -6,5 +6,9 @@ python-dotenv
 nextcord
 pymongo
 dnspython
+Pillow
+requests
+aiohttp
+datetime
 git+https://github.com/Potatopy/Discord-iOS
 git+https://github.com/Potatopy/wavelink-nextcord
