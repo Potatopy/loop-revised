@@ -14,7 +14,7 @@ class Level(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("Level cog is ready!")
-        setattr(self.bot, "db", await aiosqlite.connect("db/level.db"))
+        setattr(self.bot, "db", await aiosqlite.connect("db/level.sqlite"))
         await asyncio.sleep(3)
         async with self.bot.db.cursor() as cursor:
             await cursor.execute("CREATE TABLE IF NOT EXISTS levels (level INT, xp INT, user INT, guild INT)")

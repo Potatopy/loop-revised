@@ -11,11 +11,6 @@ class Mod(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("Mod cog is ready!")
-        setattr(self.bot, "db", await aiosqlite.connect("./warn.db"))
-        await asyncio.sleep(3)
-        async with self.bot.db.cursor() as cursor:
-            await cursor.execute("CREATE TABLE IF NOT EXISTS warns (user INT, reason TEXT, time INT, guild INT)")
-            await self.bot.db.commit()
     
     @commands.command()
     @commands.has_permissions(ban_members=True)
@@ -79,47 +74,6 @@ class Mod(commands.Cog):
             channel = ctx.channel
         await channel.edit(slowmode_delay=seconds)
         await ctx.send(f"Set slowmode delay to {seconds} seconds in {channel.mention}")
-
-    async def warn(self, ctx, member: nextcord.Member, *, reason=None):
-        async with self.bot.db.cursor() as cursor:
-            await cursor.execute("INSERT INTO warns (user, reason, time, guild) VALUES (?, ?, ?, ?)", (member.id, reason, int(datetime.datetime.now().timestamp()), ctx.guild.id))
-        await self.bot.db.commit()
-
-    @commands.command()
-    @commands.has_permissions(manage_messages=True)
-    async def warn(self, ctx, member: nextcord.Member, *, reason=None):
-        await self.warn(ctx, member, reason=reason)
-        await ctx.send(f"Warned {member.mention} for {reason}")
-
-    @commands.command()
-    @commands.has_permissions(manage_messages=True)
-    async def removewarn(self, ctx, member: nextcord.Member):
-        async with self.bot.db.cursor() as cursor:
-            await cursor.execute("SELECT reason FROM warns WHERE user = ? AND guild = ?", (member.id, ctx.guild.id))
-            data = await cursor.fetchone()
-            if data:
-                await cursor.execute("DELETE FROM warns WHERE user = ? AND guild = ?", (member.id, ctx.guild.id))
-                await ctx.send(f"Removed warn for {member.mention}")
-            else:
-                await ctx.send("No warns found for this user.")
-        await self.bot.db.commit()
-
-    @commands.command()
-    @commands.has_permissions(manage_messages=True)
-    async def warns(self, ctx, member: nextcord.Member):
-        async with self.bot.db.cursor() as cursor:
-            await cursor.execute("SELECT reason, time FROM warns WHERE user = ? AND guild = ?", (member.id, ctx.guild.id))
-            data = await cursor.fetchall()
-            if data:
-                em = nextcord.Embed(title=f"Warns for {member}", color=nextcord.Color.red())
-                warnnum = 0
-                for table in data:
-                    warnnum += 1
-                    em.add_field(name=f"Warn {warnnum}", value=f"Reason: {table[0]} | Date Issued: <t:{int(table[1])}:F>")
-                await ctx.send(embed=em)
-            else:
-                await ctx.send("No warns found for this user.")
-        await self.bot.db.commit()
 
 def setup(bot):
     bot.add_cog(Mod(bot))
