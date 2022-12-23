@@ -17,7 +17,7 @@ And Many More To Come!
 ## Requirements
 
 - Python 3.9 or higher
-- a mongodb login
+- ~~a mongodb login~~ (not a current requirement)
 - a discord bot token
 - everything in requirements.txt
 

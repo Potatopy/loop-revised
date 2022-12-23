@@ -18,6 +18,7 @@ class Level(commands.Cog):
         await asyncio.sleep(3)
         async with self.bot.db.cursor() as cursor:
             await cursor.execute("CREATE TABLE IF NOT EXISTS levels (level INT, xp INT, user INT, guild INT)")
+            await cursor.execute("CREATE TABLE IF NOT EXISTS levelSettings (levelsys BOOL, role INT, levelreq INT, guild INT)")
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -26,6 +27,12 @@ class Level(commands.Cog):
         author = message.author
         guild = message.guild
         async with self.bot.db.cursor() as cursor:
+            await cursor.execute("SELECT levelsys FROM levelSettings WHERE guild = ?", (guild.id,))
+            levelsys = await cursor.fetchone()
+            if levelsys:
+                if not levelsys[0] == 1:
+                    return await self.bot.process_commands(message)
+
             await cursor.execute("SELECT xp FROM levels WHERE user = ? AND guild = ?", (author.id, guild.id))
             xp = await cursor.fetchone()
             await cursor.execute("SELECT level FROM levels WHERE user = ? AND guild = ?", (author.id, guild.id))
@@ -51,16 +58,33 @@ class Level(commands.Cog):
                     await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (xp, author.id, guild.id))
             if xp >= 100:
                 level += 1
+                await cursor.execute("SELECT role FROM levelSettings WHERE levelreq = ? AND guild = ?", (level, guild.id))
+                role = await cursor.fetchone()
                 await cursor.execute("UPDATE levels SET level = ? WHERE user = ? AND guild = ?", (level, author.id, guild.id))
                 await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (0, author.id, guild.id))
+                if role:
+                    role = role[0]
+                    role = guild.get_role(role)
+                    await author.add_roles(role)
+                    try:
+                        await author.add_roles(role)
+                        await message.channel.send(f"{author.mention} has leveled up to **{level}** and has been given the role **{role.name}**!")
+                    except nextcord.HTTPException:
+                        await message.channel.send(f"{author.mention} has leveled up to **{level}**. Contact an Admin to give you the role **{role.name}**!")
                 await message.channel.send(f"{author.mention} has leveled up to level **{level}**!")
             await self.bot.db.commit()
+            await self.bot.process_commands(message)
 
     @commands.command(aliases=['rank', 'lvl', 'xp'])
     async def level(self, ctx, member: nextcord.Member = None):
         if member is None:
             member = ctx.author
         async with self.bot.db.cursor() as cursor:
+            await cursor.execute("SELECT levelsys FROM levelSettings WHERE guild = ?", (guild.id,))
+            levelsys = await cursor.fetchone()
+            if levelsys:
+                if not levelsys[0] == 1:
+                    return await ctx.send("Leveling is disabled in this server!")
             await cursor.execute("SELECT xp FROM levels WHERE user = ? AND guild = ?", (member.id, ctx.guild.id))
             xp = await cursor.fetchone()
             await cursor.execute("SELECT level FROM levels WHERE user = ? AND guild = ?", (member.id, ctx.guild.id))
@@ -115,6 +139,76 @@ class Level(commands.Cog):
             )
 
             await ctx.send(file=nextcord.File(filename="lvl.png", fp=background.image_bytes))
+
+    @commands.group()
+    async def slvl(self, ctx):
+        return
+
+    @slvl.command(aliases=['e', 'en'])
+    @commands.has_permissions(administrator=True)
+    async def enable(self, ctx):
+        async with self.bot.db.cursor() as cursor:
+            await cursor.execute("SELECT levelsys FROM levelSettings WHERE guild = ?", (ctx.guild.id,))
+            levelsys = await cursor.fetchone()
+            if levelsys:
+                if levelsys[0]:
+                    return await ctx.send("Leveling is already enabled.")
+                await cursor.execute("UPDATE levelSettings SET levelsys = ? WHERE guild = ?", (True, ctx.guild.id))
+            else:
+                await cursor.execute("INSERT INTO levelSettings VALUES (?, ?, ?, ?)", (True, 0, 0, ctx.guild.id))
+            await ctx.send("Enabled Leveling.")
+        await self.bot.db.commit()
+
+    @slvl.command(aliases=['d', 'di'])
+    @commands.has_permissions(administrator=True)
+    async def enable(self, ctx):
+        async with self.bot.db.cursor() as cursor:
+            await cursor.execute("SELECT levelsys FROM levelSettings WHERE guild = ?", (ctx.guild.id,))
+            levelsys = await cursor.fetchone()
+            if levelsys:
+                if levelsys[0]:
+                    return await ctx.send("Leveling is already disabled.")
+                await cursor.execute("UPDATE levelSettings SET levelsys = ? WHERE guild = ?", (False, ctx.guild.id))
+            else:
+                await cursor.execute("INSERT INTO levelSettings VALUES (?, ?, ?, ?)", (False, 0, 0, ctx.guild.id))
+            await ctx.send("Disabled Leveling.")
+        await self.bot.db.commit()
+
+    @commands.command()
+    async def perks(self, ctx):
+        async with self.bot.db.cursor() as cursor:
+            await cursor.execute("SELECT levelsys FROM levelSettings WHERE guild = ?", (ctx.guild.id,))
+            levelsys = await cursor.fetchone()
+            if levelsys:
+                if not levelsys[0] == 1:
+                    return await ctx.send("Leveling is disabled in this server!")
+                await cursor.execute("SELECT * FROM levelSettings WHERE guild = ?", (ctx.guild.id,))
+                roleLevels = await cursor.fetchone()
+                if not roleLevels:
+                    return await ctx.send("No perks have been set up for this server! View the perks channel (if you even have one) to see what perks are available.")
+                em = nextcord.Embed(title="role perks", description="Role Perks!")
+                for role in roleLevels:
+                    em.add_field(name=f"Level {role[2]}", value=f"{ctx.guild.get_role(role[1]).mention}", inline=False)
+                await ctx.send(embed=em)
+
+    @slvl.command(aliases=['sr', 'addrole', 'ar'])
+    @commands.has_permissions(administrator=True)
+    async def setrole(self, ctx, level:int, *, role: nextcord.Role):
+        async with self.bot.db.cursor() as cursor:
+            await cursor.execute("SELECT levelsys FROM levelSettings WHERE guild = ?", (ctx.guild.id,))
+            levelsys = await cursor.fetchone()
+            if levelsys:
+                if not levelsys[0] == 1:
+                    return await ctx.send("Leveling is disabled in this server!")
+            await cursor.execute("SELECT role FROM levelSettings WHERE role = ? AND guild = ?", (role.id, ctx.guild.id))
+            roleTF = await cursor.fetchone()
+            await cursor.execute("SELECT role FROM levelSettings WHERE level = ? AND guild = ?", (level, ctx.guild.id))
+            levelTF = await cursor.fetchone()
+            if roleTF or levelTF:
+                return await ctx.send("This role or level is already set up!")
+            await cursor.execute("INSERT INTO levelSettings VALUES (?, ?, ?, ?)", (True, role.id, level, ctx.guild.id))
+            await self.bot.db.commit()
+        await ctx.send(f"Added {role.mention} to level {level}!")
 
 def setup(bot):
     bot.add_cog(Level(bot))
