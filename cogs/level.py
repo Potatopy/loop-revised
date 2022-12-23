@@ -79,7 +79,7 @@ class Level(commands.Cog):
         if member is None:
             member = ctx.author
         async with self.bot.db.cursor() as cursor:
-            await cursor.execute("SELECT levelsys FROM levelSettings WHERE guild = ?", (guild.id,))
+            await cursor.execute("SELECT levelsys FROM levelSettings WHERE guild = ?", (ctx.guild.id,))
             levelsys = await cursor.fetchone()
             if levelsys:
                 if not levelsys[0] == 1:
@@ -188,7 +188,6 @@ class Level(commands.Cog):
                 em = nextcord.Embed(title="role perks", description="Role Perks!")
                 for role in roleLevels:
                     em.add_field(name=f"Level {role[2]}", value=f"{ctx.guild.get_role(role[1]).mention}", inline=False)
-                    em.add_footer(text="view the <#1049892987070590996> channel to see what perks are available.")
                 await ctx.send(embed=em)
 
     @slvl.command(aliases=['sr', 'addrole', 'ar'])
@@ -221,7 +220,7 @@ class Level(commands.Cog):
             await cursor.execute("SELECT level, xp, user FROM levels WHERE guild = ? ORDER BY level DESC, xp DESC LIMIT 10", (ctx.guild.id,))
             data = await cursor.fetchall()
             if data:
-                em = nextcord.Embed(f"Leaderboard for {ctx.guild.name}")
+                em = nextcord.Embed(title=f"Leaderboard for {ctx.guild.name}")
                 count = 0
                 for table in data:
                     count += 1
