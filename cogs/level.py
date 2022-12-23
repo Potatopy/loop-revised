@@ -182,12 +182,13 @@ class Level(commands.Cog):
                 if not levelsys[0] == 1:
                     return await ctx.send("Leveling is disabled in this server!")
                 await cursor.execute("SELECT * FROM levelSettings WHERE guild = ?", (ctx.guild.id,))
-                roleLevels = await cursor.fetchone()
+                roleLevels = await cursor.fetchall()
                 if not roleLevels:
                     return await ctx.send("No perks have been set up for this server! View the perks channel (if you even have one) to see what perks are available.")
                 em = nextcord.Embed(title="role perks", description="Role Perks!")
                 for role in roleLevels:
                     em.add_field(name=f"Level {role[2]}", value=f"{ctx.guild.get_role(role[1]).mention}", inline=False)
+                    em.add_footer(text="view the <#1049892987070590996> channel to see what perks are available.")
                 await ctx.send(embed=em)
 
     @slvl.command(aliases=['sr', 'addrole', 'ar'])
@@ -201,7 +202,7 @@ class Level(commands.Cog):
                     return await ctx.send("Leveling is disabled in this server!")
             await cursor.execute("SELECT role FROM levelSettings WHERE role = ? AND guild = ?", (role.id, ctx.guild.id))
             roleTF = await cursor.fetchone()
-            await cursor.execute("SELECT role FROM levelSettings WHERE level = ? AND guild = ?", (level, ctx.guild.id))
+            await cursor.execute("SELECT role FROM levelSettings WHERE levelreq = ? AND guild = ?", (level, ctx.guild.id))
             levelTF = await cursor.fetchone()
             if roleTF or levelTF:
                 return await ctx.send("This role or level is already set up!")
