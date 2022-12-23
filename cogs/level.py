@@ -161,7 +161,7 @@ class Level(commands.Cog):
 
     @slvl.command(aliases=['d', 'di'])
     @commands.has_permissions(administrator=True)
-    async def enable(self, ctx):
+    async def disable(self, ctx):
         async with self.bot.db.cursor() as cursor:
             await cursor.execute("SELECT levelsys FROM levelSettings WHERE guild = ?", (ctx.guild.id,))
             levelsys = await cursor.fetchone()
