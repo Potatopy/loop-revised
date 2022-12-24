@@ -19,6 +19,8 @@ class Level(commands.Cog):
         async with self.bot.db.cursor() as cursor:
             await cursor.execute("CREATE TABLE IF NOT EXISTS levels (level INT, xp INT, user INT, guild INT)")
             await cursor.execute("CREATE TABLE IF NOT EXISTS levelSettings (levelsys BOOL, role INT, levelreq INT, guild INT)")
+        await self.bot.db.commit()
+        print("Level database is ready!")
 
     @commands.Cog.listener()
     async def on_message(self, message):

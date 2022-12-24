@@ -1,5 +1,6 @@
 import nextcord
 import asyncio
+import aiosqlite
 from nextcord.ext import commands
 
 class Util(commands.Cog):
