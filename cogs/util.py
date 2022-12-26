@@ -10,7 +10,7 @@ class Util(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('Util Cog is ready')
+        print('Util Cog is ready!')
 
     @commands.Cog.listener()
     async def on_message(self, message):

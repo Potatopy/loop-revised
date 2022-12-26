@@ -54,7 +54,7 @@ class Level(commands.Cog):
                 xp += random.randint(3, 6)
                 await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (xp, author.id, guild.id))
             else:
-                rand = random.randint(3, (level//4))
+                rand = random.randint(3, 6)
                 if rand == 1:
                     xp += random.randint(3, 6)
                     await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (xp, author.id, guild.id))

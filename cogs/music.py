@@ -159,8 +159,12 @@ class Music(commands.Cog):
         em.add_field(name="Info", value=f"Song URL: [Click Me]({str(vc.track.uri)})")
         return await ctx.send(embed=em)
 
-    @commands.command()
-    async def splay(self, ctx: commands.Context, *, search: str):
+    @commands.group()
+    async def spotify(self, ctx: commands.Context):
+        pass
+    
+    @spotify.command()
+    async def play(self, ctx: commands.Context, *, search: str):
         if not ctx.voice_client:
             vc: wavelink.Player = await ctx.author.voice.channel.connect(cls=wavelink.Player)
         elif not ctx.author.voice:
