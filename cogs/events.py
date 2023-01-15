@@ -26,7 +26,7 @@ class Events(commands.Cog):
         background.paste(profile, (325, 90))
         background.ellipse((325, 90), 150, 150, outline="white", stroke_width=5)
 
-        background.text((400, 260), f"Welcome to /loop!", font=poppins, fill="white", align="center")
+        background.text((400, 260), f"Welcome to /loop!", font=poppins, fill="#FFFFFF", align="center")
         background.text((400, 325), f"{member.name}#{member.discriminator}", font=poppins_small, fill="white", align="center")
 
         file = File(fp=background.image_bytes, filename="welcome.png")

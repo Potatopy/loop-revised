@@ -4,6 +4,49 @@ import asyncio
 import random
 from nextcord.ext import commands
 
+class ShopView(nextcord.ui.View):
+    def __init__(self, ctx):
+        super().__init__(timeout=120)
+
+    @nextcord.ui.button(label="Laptop", style=nextcord.ButtonStyle.blurple, custom_id="laptop")
+    async def laptop(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        db = await aiosqlite.connect("db/bank.sqlite")
+        async with db.cursor() as cursor:
+            await cursor.execute("SELECT laptop FROM inv WHERE user = ?", (interaction.user.id,))
+            item = await cursor.fetchone()
+            if item is None:
+                await cursor.execute("INSERT INTO inv VALUES (?, ?, ?, ?)", (1, 0, 0, interaction.user.id,))
+            else:
+                await cursor.execute("UPDATE inv SET laptop = ? WHERE user = ?", (item[0] + 1, interaction.user.id,))
+        await db.commit()
+        await interaction.response.send_message("You bought a laptop!", ephemeral=True)
+
+    @nextcord.ui.button(label="Phone", style=nextcord.ButtonStyle.blurple, custom_id="phone")
+    async def phone(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        db = await aiosqlite.connect("db/bank.sqlite")
+        async with db.cursor() as cursor:
+            await cursor.execute("SELECT phone FROM inv WHERE user = ?", (interaction.user.id,))
+            item = await cursor.fetchone()
+            if item is None:
+                await cursor.execute("INSERT INTO inv VALUES (?, ?, ?, ?)", (1, 0, 0, interaction.user.id,))
+            else:
+                await cursor.execute("UPDATE inv SET phone = ? WHERE user = ?", (item[0] + 1, interaction.user.id,))
+        await db.commit()
+        await interaction.response.send_message("You bought a phone!", ephemeral=True)
+
+    @nextcord.ui.button(label="FakeID", style=nextcord.ButtonStyle.blurple, custom_id="fakeid")
+    async def fakeid(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        db = await aiosqlite.connect("db/bank.sqlite")
+        async with db.cursor() as cursor:
+            await cursor.execute("SELECT fakeid FROM inv WHERE user = ?", (interaction.user.id,))
+            item = await cursor.fetchone()
+            if item is None:
+                await cursor.execute("INSERT INTO inv VALUES (?, ?, ?, ?)", (1, 0, 0, interaction.user.id,))
+            else:
+                await cursor.execute("UPDATE inv SET fakeid = ? WHERE user = ?", (item[0] + 1, interaction.user.id,))
+        await db.commit()
+        await interaction.response.send_message("You bought a Fake ID!", ephemeral=True)
+
 class Eco(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -15,7 +58,7 @@ class Eco(commands.Cog):
         await asyncio.sleep(3)
         async with db.cursor() as cursor:
             await cursor.execute("CREATE TABLE IF NOT EXISTS bank (wallet INT, bank INT, maxbank INT, user INT)")
-            await cursor.execute("CREATE TABLE IF NOT EXISTS inv (laptop INT, phone INT, fakeid INT)")
+            await cursor.execute("CREATE TABLE IF NOT EXISTS inv (laptop INT, phone INT, fakeid INT, user INT)")
             await cursor.execute("CREATE TABLE IF NOT EXISTS shop (name TEXT, id TEXT, desc TEXT, cost INT)")
         await db.commit()
         print("Bank database is ready!")
@@ -100,6 +143,12 @@ class Eco(commands.Cog):
         await db.commit()
         return
 
+    @commands.command()
+    @commands.is_owner()
+    async def add_items(self, ctx, name: str, id: str, desc: str, cost: int):
+        await self.update_shop(name, id, desc, cost)
+        await ctx.send("Item added to shop!", delete_after=5)
+    
     @commands.command()
     async def balance(self, ctx, member: nextcord.Member = None):
         if not member:
@@ -200,6 +249,18 @@ class Eco(commands.Cog):
         em = nextcord.Embed(title=f"Gave ${amount} to {member.name}")
         em.add_field(name=f"Wallet for {ctx.author.name}", value=f"${wallet}")
         em.add_field(name=f"Wallet for {member.name}", value=f"${wallet2}")
+
+    @commands.command()
+    @commands.cooldown(1, 10, commands.BucketType.user)
+    async def shop(self, ctx):
+        db = await aiosqlite.connect("db/bank.sqlite")
+        em = nextcord.Embed(title="Shop", description="Nothing really works tbh")
+        async with db.cursor() as cursor:
+            await cursor.execute("SELECT name, desc, cost FROM shop")
+            shop = await cursor.fetchall()
+            for item in shop:
+                em.add_field(name=f"{item[0]}", value=f"{item[1]} | Cost: ${item[2]}")
+            await ctx.send(embed=em, view=ShopView(self.bot))
 
 def setup(bot):
     bot.add_cog(Eco(bot))

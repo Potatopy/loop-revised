@@ -11,10 +11,11 @@ from dotenv import load_dotenv
 # Load .env file
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
+PREFIX = os.getenv("PREFIX")
 
 # Set up the bot
-activity = nextcord.Activity(type=nextcord.ActivityType.watching, name=",help")
-bot = commands.Bot(command_prefix=",", intents=nextcord.Intents.all(), activity=activity, help_command=None, shard_count=1)
+activity = nextcord.Activity(type=nextcord.ActivityType.watching, name=f"{PREFIX}help")
+bot = commands.Bot(command_prefix={PREFIX}, intents=nextcord.Intents.all(), activity=activity, help_command=None, shard_count=1)
 
 # Load cogs
 for fn in os.listdir("./cogs"):
