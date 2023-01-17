@@ -25,7 +25,7 @@ And Many More To Come!
 
 ## Setup
 
-View the how to setup the bot in [this website](https://loop-3.gitbook.io/api-docs/)
+Run `setup.py` and follow the on-screen instructions!
 
 ## Links
 
@@ -33,4 +33,4 @@ View the how to setup the bot in [this website](https://loop-3.gitbook.io/api-do
 
 [Support](https://discord.gg/9j8qcsVFQX)
 
-[Documentation](https://loop-3.gitbook.io/api-docs/)
+~~[Documentation](https://loop-3.gitbook.io/api-docs/)~~ 
