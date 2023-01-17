@@ -27,6 +27,7 @@ PREFIX={prefix}"""
     print("Created!")
     print("Setup complete!")
     print("Starting bot...")
+    time.sleep(5)
     print("\n" * 100)
     os.system("python main.py")
 except Exception as e:
