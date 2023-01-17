@@ -2,6 +2,8 @@
 
 This is a revised version of the [loop-bot](https://github.com/Potatopy/loop-bot)
 
+**Quick Note: This may not be maintained as much currently due to me working on another bot**
+
 bot made by domain#0001 for .gg/loop (at least thats the future vanity)
 
 ## Features
