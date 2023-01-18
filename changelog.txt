@@ -7,6 +7,14 @@ Update: v1.0.0
 - Added Music Commands
 - Added Economy Commands
 - Added Leveling System
-- Added Custom Prefix
 - Added Custom Welcome Message
 - Added run.bat + run.sh for easy startup
+
+Update: v1.0.1:
+
+- Added help commands for all categories
+- Updated the actual `help` command
+- Added Join To Created System
+- Added A UI For The Bot
+- Added A Presence when run
+- Made it more beginner friendly

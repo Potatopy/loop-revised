@@ -10,5 +10,9 @@ Pillow
 requests
 aiohttp
 datetime
+traceback
+sqlite3
+validators
+pypresence
 git+https://github.com/Potatopy/Discord-iOS
 git+https://github.com/Potatopy/wavelink-nextcord

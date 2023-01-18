@@ -2,7 +2,13 @@ import asyncio
 import aiosqlite
 import datetime
 import nextcord
+import os
+
 from nextcord.ext import commands
+from dotenv import load_dotenv
+
+load_dotenv()
+p = os.getenv("PREFIX")
 
 class Mod(commands.Cog):
     def __init__(self, bot):
@@ -74,6 +80,23 @@ class Mod(commands.Cog):
             channel = ctx.channel
         await channel.edit(slowmode_delay=seconds)
         await ctx.send(f"Set slowmode delay to {seconds} seconds in {channel.mention}")
+
+    @commands.group()
+    async def mod(self, ctx):
+        pass
+
+    @mod.command()
+    async def help(self, ctx):
+        em = nextcord.Embed(title="Mod Help", description="All Mod Commands", color=nextcord.Color.blue())
+        em.add_field(name="**Ban**", value=f"{p}ban <member> <reason>", inline=False)
+        em.add_field(name="**Kick**", value=f"{p}kick <member> <reason>", inline=False)
+        em.add_field(name="**Clear**", value=f"{p}clear <amount>", inline=False)
+        em.add_field(name="**Unban**", value=f"{p}unban <member>", inline=False)
+        em.add_field(name="**Lock**", value=f"{p}lock <channel> <setting>", inline=False)
+        em.add_field(name="**Unlock**", value=f"{p}unlock <channel> <setting>", inline=False)
+        em.add_field(name="**Slowmode**", value=f"{p}slowmode <seconds> <channel>", inline=False)
+        em.set_footer(text="More commands will be added soon!")
+        await ctx.send(embed=em)
 
 def setup(bot):
     bot.add_cog(Mod(bot))

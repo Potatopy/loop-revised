@@ -1,7 +1,13 @@
 import nextcord
 import asyncio
 import aiosqlite
+import os
+
 from nextcord.ext import commands
+from dotenv import load_dotenv
+
+load_dotenv()
+p = os.getenv("PREFIX")
 
 class Util(commands.Cog):
     def __init__(self, bot):
@@ -36,12 +42,7 @@ class Util(commands.Cog):
         await asyncio.sleep(60)
         snipe_message_author = None
         snipe_message_content = None
-
-    @commands.command()
-    async def help(self, ctx):
-        em = nextcord.Embed(description="documentation + commands: [click](https://loop-3.gitbook.io/api-docs/)")
-        await ctx.send(embed=em)
-
+    
     @commands.command()
     async def afk(self, ctx, *args):
         msg = ' '.join(args)
@@ -78,6 +79,20 @@ class Util(commands.Cog):
     @commands.command()
     async def ping(self, ctx):
         await ctx.send(f"Pong! {round(self.bot.latency * 1000)}ms")
+
+    @commands.group()
+    async def util(self, ctx):
+        pass
+
+    @util.command()
+    async def help(self, ctx):
+        em = nextcord.Embed(title="Help", description="Help for the Util cog", color=nextcord.Color.purple())
+        em.add_field(name=f"{p}afk", value="Sets you as afk", inline=False)
+        em.add_field(name=f"{p}snipe", value="Snipes the last deleted message", inline=False)
+        em.add_field(name=f"{p}echo", value="Echoes the message you send", inline=False)
+        em.add_field(name=f"{p}poll", value="Creates a poll", inline=False)
+        em.add_field(name=f"{p}ping", value="Pings the bot", inline=False)
+        await ctx.send(embed=em)
 
 def setup(bot):
     bot.add_cog(Util(bot))

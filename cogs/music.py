@@ -1,9 +1,17 @@
 import datetime
 import nextcord
 import wavelink
+import os
 
 from nextcord.ext import commands
 from wavelink.ext import spotify
+from dotenv import load_dotenv
+
+load_dotenv()
+host = os.getenv("LAVALINK_HOST")
+port = os.getenv("LAVALINK_PORT")
+password = os.getenv("LAVALINK_PASSWORD")
+p = os.getenv("PREFIX")
 
 class Music(commands.Cog):
     def __init__(self, bot):
@@ -12,7 +20,7 @@ class Music(commands.Cog):
 
     async def node_connect(self):
         await self.bot.wait_until_ready()
-        await wavelink.NodePool.create_node(bot=self.bot, host='lavalink4africa.islantay.tk', port=8880, password="AmeliaWatsonisTheBest**!", spotify_client=spotify.SpotifyClient(client_id="b3ec1a336be5419a8f856a28c173e396", client_secret="cca55cffc7294c24a9c76285495e0a89"))
+        await wavelink.NodePool.create_node(bot=self.bot, host=host, port=port, password=password, spotify_client=spotify.SpotifyClient(client_id="b3ec1a336be5419a8f856a28c173e396", client_secret="cca55cffc7294c24a9c76285495e0a89"))
 
     @commands.Cog.listener()
     async def on_wavelink_node_ready(self, node: wavelink.Node):
@@ -29,6 +37,25 @@ class Music(commands.Cog):
         next_song = vc.queue.get()
         await vc.play(next_song)
         await ctx.send(f"Now Playing: {next_song.title}")
+    
+    @commands.group()
+    async def music(self, ctx):
+        pass
+
+    @music.command()
+    async def help(self, ctx):
+        em = nextcord.Embed(title="Music Help", description="**Commands**", color=0x00ff00)
+        em.add_field(name=f"**{p}play**", value="Plays a song from youtube", inline=False)
+        em.add_field(name=f"**{p}pause**", value="Pauses the current song", inline=False)
+        em.add_field(name=f"**{p}resume**", value="Resumes the current song", inline=False)
+        em.add_field(name=f"**{p}stop**", value="Stops the current song", inline=False)
+        em.add_field(name=f"**{p}skip**", value="Skips the current song", inline=False)
+        em.add_field(name=f"**{p}queue**", value="Shows the current queue", inline=False)
+        em.add_field(name=f"**{p}loop**", value="Loops the current song", inline=False)
+        em.add_field(name=f"**{p}nowplaying**", value="Shows the current song", inline=False)
+        em.add_field(name=f"**{p}volume**", value="Sets the volume", inline=False)
+        em.add_field(name=f"**{p}splay**", value="Plays a song from spotify", inline=False)
+        await ctx.send(embed=em)
     
     @commands.command(aliases=['p'])
     async def play(self, ctx: commands.Context, *, search: wavelink.YouTubeTrack):

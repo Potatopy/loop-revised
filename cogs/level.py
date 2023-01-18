@@ -3,9 +3,14 @@ import asyncio
 import nextcord
 import random
 import easy_pil
+import os
 
 from nextcord.ext import commands
 from easy_pil import *
+from dotenv import load_dotenv
+
+load_dotenv()
+p = os.getenv("PREFIX")
 
 class Level(commands.Cog):
     def __init__(self, bot):
@@ -77,7 +82,7 @@ class Level(commands.Cog):
             await self.bot.db.commit()
 
     @commands.command(aliases=['rank', 'lvl', 'xp'])
-    async def level(self, ctx, member: nextcord.Member = None):
+    async def r(self, ctx, member: nextcord.Member = None):
         if member is None:
             member = ctx.author
         async with self.bot.db.cursor() as cursor:
@@ -145,6 +150,14 @@ class Level(commands.Cog):
     async def slvl(self, ctx):
         return
 
+    @slvl.command()
+    async def help(self, ctx):
+        em = nextcord.Embed(title="Level Settings", description="**Note: All Commands here need admin perms", color=0x00ff00)
+        em.add_field(name=f"{p}slvl setrole <level> <role>", value="Sets a role to be given when a user reaches a certain level.")
+        em.add_field(name=f"{p}slvl enable", value="Enables leveling in the server.")
+        em.add_field(name=f"{p}slvl disable", value="Disables leveling in the server.")
+        await ctx.send(embed=em)
+    
     @slvl.command(aliases=['e', 'en'])
     @commands.has_permissions(administrator=True)
     async def enable(self, ctx):

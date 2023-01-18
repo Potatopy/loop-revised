@@ -2,30 +2,38 @@
 
 This is a revised version of the [loop-bot](https://github.com/Potatopy/loop-bot)
 
-**Quick Note: This may not be maintained as much currently due to me working on another bot**
-
 bot made by domain#0001 for .gg/loop (at least thats the future vanity)
 
 ## Features
 
-- [ ] Welcome system
-- [ ] An economy system (W.I.P)
+- [x] Welcome system
+- [x] An economy system (In Development)
 - [x] A moderation system
-- [ ] Anime commands (NSFW + SFW)
-- [ ] A music system
+- [x] Anime commands (NSFW + SFW)
+- [x] A music system
 
 And Many More To Come!
 
 ## Requirements
 
 - Python 3.9 or higher
-- ~~a mongodb login~~ (not a current requirement)
-- a discord bot token
-- everything in requirements.txt
+- A Discord Bot token
+- A Lavalink host - (optional)
+- Everything in requirements.txt - (Will automatically install once you run `setup.py`)
 
 ## Setup
 
 Run `setup.py` and follow the on-screen instructions!
+
+## Common Issues
+
+- `Connection Failure: Cannot connect to host (lavalink server) ssl:default [The remote computer refused the network connection]`: This is a common issue with Lavalink. It is caused by the host being down. You can either wait for it to come back up or use a different host. You can find a list of hosts [here](https://lavalink.darrennathanael.com/NoSSL/lavalink-without-ssl/)
+
+- `nextcord.errors.LoginFailure: Improper token has been passed.` This is caused by an invalid token. Make sure you are using the correct token.
+
+- `.env is in unreadable text format`: This is caused by the `.env` file being corrupted. Delete the `.env` file and run `setup.py` again.
+
+If you still need help join the discord server and i'll try to help you out!
 
 ## Links
 
@@ -33,4 +41,4 @@ Run `setup.py` and follow the on-screen instructions!
 
 [Support](https://discord.gg/9j8qcsVFQX)
 
-~~[Documentation](https://loop-3.gitbook.io/api-docs/)~~ 
+~~[Documentation](https://loop-3.gitbook.io/api-docs/)~~
