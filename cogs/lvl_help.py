@@ -21,7 +21,7 @@ class Lvl_help(commands.Cog):
 
     @level.command()
     async def help(self, ctx):
-        em = nextcord.Embed(title="Level Commands", description="**Note: All Commands here need admin perms", color=0x00ff00)
+        em = nextcord.Embed(title="Level Commands", description="Commands:", color=0x00ff00)
         em.add_field(name=f"{p}level <member>", value="Shows the level of a member.")
         em.add_field(name=f"{p}leaderboard", value="Shows the leaderboard of the server.")
         em.add_field(name=f"{p}perks", value="Shows the perks of leveling up.")

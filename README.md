@@ -33,6 +33,8 @@ Run `setup.py` and follow the on-screen instructions!
 
 - `.env is in unreadable text format`: This is caused by the `.env` file being corrupted. Delete the `.env` file and run `setup.py` again.
 
+- `nextcord is incompatible with discord.py`: This is caused by having both `discord.py` and `nextcord` installed. Uninstall `discord.py` by running `pip uninstall discord.py` and run `setup.py` again. And remove the original wavelink and install the one in the requirements.txt file.
+
 If you still need help join the discord server and i'll try to help you out!
 
 ## Links
@@ -41,4 +43,4 @@ If you still need help join the discord server and i'll try to help you out!
 
 [Support](https://discord.gg/9j8qcsVFQX)
 
-~~[Documentation](https://loop-3.gitbook.io/api-docs/)~~
+~~[Documentation](https://loop-3.gitbook.io/api-docs/)~~ removed since it's so simple.

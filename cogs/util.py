@@ -80,19 +80,20 @@ class Util(commands.Cog):
     async def ping(self, ctx):
         await ctx.send(f"Pong! {round(self.bot.latency * 1000)}ms")
 
-    @commands.group()
-    async def util(self, ctx):
-        pass
-
-    @util.command()
+    @commands.command()
     async def help(self, ctx):
-        em = nextcord.Embed(title="Help", description="Help for the Util cog", color=nextcord.Color.purple())
-        em.add_field(name=f"{p}afk", value="Sets you as afk", inline=False)
-        em.add_field(name=f"{p}snipe", value="Snipes the last deleted message", inline=False)
-        em.add_field(name=f"{p}echo", value="Echoes the message you send", inline=False)
-        em.add_field(name=f"{p}poll", value="Creates a poll", inline=False)
-        em.add_field(name=f"{p}ping", value="Pings the bot", inline=False)
-        await ctx.send(embed=em)
+        embed = nextcord.Embed(title="Help", description=f"All Help Commands\nJust run `{p}(category) help` All available categories are below", color=nextcord.Color.blue())
+        embed.add_field(name="**Music**", value=f"{p}music help", inline=False)
+        embed.add_field(name="**Utility**", value=f"{p}util help", inline=False)
+        embed.add_field(name="**Level**", value=f"{p}level help", inline=False)
+        embed.add_field(name="**Voice**", value=f"{p}voice help", inline=False)
+        embed.add_field(name="**Eco**", value=f"{p}eco help", inline=False)
+        embed.add_field(name="**Fun**", value=f"{p}fun help", inline=False)
+        embed.add_field(name="**Moderation**", value=f"{p}mod help", inline=False)
+        embed.add_field(name="**Anime**", value=f"{p}anime help", inline=False)
+        embed.add_field(name="**Owner**", value=f"{p}owner help", inline=False)
+        embed.set_footer(text="More categories will be added soon!")
+        await ctx.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(Util(bot))

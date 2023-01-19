@@ -143,6 +143,22 @@ class Eco(commands.Cog):
         await db.commit()
         return
 
+    @commands.group()
+    async def eco(self, ctx):
+        pass
+
+    @eco.command()
+    async def help(self, ctx):
+        em = nextcord.Embed(title="Economy Help", description="Commands:")
+        em.add_field(name="balance", value="Shows your balance")
+        em.add_field(name="shop", value="Shows the shop (doesn't really do anything yet)")
+        em.add_field(name="buy", value="Buys an item from the shop")
+        em.add_field(name="deposit", value="Deposits money into your bank")
+        em.add_field(name="withdraw", value="Withdraws money from your bank")
+        em.add_field(name="give", value="Gives money to another user")
+        em.add_field(name="add_items", value="Add items to the shop (owner only)")
+        await ctx.send(embed=em)
+    
     @commands.command()
     @commands.is_owner()
     async def add_items(self, ctx, name: str, id: str, desc: str, cost: int):

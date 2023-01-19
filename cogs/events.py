@@ -26,11 +26,11 @@ class Events(commands.Cog):
         background.paste(profile, (325, 90))
         background.ellipse((325, 90), 150, 150, outline="white", stroke_width=5)
 
-        background.text((400, 260), f"Welcome to /loop!", font=poppins, fill="#FFFFFF", align="center")
+        background.text((400, 260), f"Welcome to {member.guild.name}!", font=poppins, fill="#FFFFFF", align="center")
         background.text((400, 325), f"{member.name}#{member.discriminator}", font=poppins_small, fill="white", align="center")
 
         file = File(fp=background.image_bytes, filename="welcome.png")
-        await channel.send(f"Welcome {member.mention} to /loop", file=file)
+        await channel.send(f"Welcome {member.mention} to {member.guild.name}", file=file)
 
 def setup(bot):
     bot.add_cog(Events(bot))

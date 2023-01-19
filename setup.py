@@ -1,19 +1,18 @@
 # ik its a mess this was kinda rushed lmao
-
 import time
 import os
 
 print('\n' * 100)
 print("""
 
-██████╗░░█████╗░████████╗░█████╗░████████╗░█████╗░  ░██████╗███████╗████████╗██╗░░░██╗██████╗░
-██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗╚══██╔══╝██╔══██╗  ██╔════╝██╔════╝╚══██╔══╝██║░░░██║██╔══██╗
-██████╔╝██║░░██║░░░██║░░░███████║░░░██║░░░██║░░██║  ╚█████╗░█████╗░░░░░██║░░░██║░░░██║██████╔╝
-██╔═══╝░██║░░██║░░░██║░░░██╔══██║░░░██║░░░██║░░██║  ░╚═══██╗██╔══╝░░░░░██║░░░██║░░░██║██╔═══╝░
-██║░░░░░╚█████╔╝░░░██║░░░██║░░██║░░░██║░░░╚█████╔╝  ██████╔╝███████╗░░░██║░░░╚██████╔╝██║░░░░░
-╚═╝░░░░░░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝░░░╚═╝░░░░╚════╝░  ╚═════╝░╚══════╝░░░╚═╝░░░░╚═════╝░╚═╝░░░░░
+            ██████╗░░█████╗░████████╗░█████╗░████████╗░█████╗░  ░██████╗███████╗████████╗██╗░░░██╗██████╗░
+            ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗╚══██╔══╝██╔══██╗  ██╔════╝██╔════╝╚══██╔══╝██║░░░██║██╔══██╗
+            ██████╔╝██║░░██║░░░██║░░░███████║░░░██║░░░██║░░██║  ╚█████╗░█████╗░░░░░██║░░░██║░░░██║██████╔╝
+            ██╔═══╝░██║░░██║░░░██║░░░██╔══██║░░░██║░░░██║░░██║  ░╚═══██╗██╔══╝░░░░░██║░░░██║░░░██║██╔═══╝░
+            ██║░░░░░╚█████╔╝░░░██║░░░██║░░██║░░░██║░░░╚█████╔╝  ██████╔╝███████╗░░░██║░░░╚██████╔╝██║░░░░░
+            ╚═╝░░░░░░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝░░░╚═╝░░░░╚════╝░  ╚═════╝░╚══════╝░░░╚═╝░░░░╚═════╝░╚═╝░░░░░
 
-© 2023 by h3lped
+            © 2023 by h3lped
 """)
 print("[*] Note: You ONLY run this file once. \n")
 TOKEN = input("[?] Your Discord Token: ")
@@ -25,19 +24,19 @@ if lavalink.lower() == "y" or lavalink.lower() == "yes":
     lavalink_port = input("Lavalink Port: ")
     lavalink_password = input("Lavalink Password: ")
 elif lavalink.lower() == "n" or lavalink.lower() == "no":
-    lavalink_host = "lavalink4africa.islantay.tk" # Default Lavalink Server
-    lavalink_port = 8800
-    lavalink_password = "AmeliaWatsonisTheBest**!"
+    lavalink_host = "minatoaqua.miraclecherrypie.cf" # Default Lavalink Server
+    lavalink_port = 8080
+    lavalink_password = "KawaiiOnyanisbetter!!!!"
     print("[*] Added default lavalink server!")
+else:
+    print("[!] Please enter a valid option!")
+    exit()
 
 if TOKEN is None:
     print("Please Insert A Discord Token")
     exit()
 elif prefix is None:
     print("Please Insert A Prefix")
-    exit()
-elif lavalink is None:
-    print("Please reply with yes or no")
     exit()
 
 try:
