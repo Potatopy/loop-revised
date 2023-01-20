@@ -18,8 +18,7 @@ And Many More To Come!
 
 - Python 3.9 or higher
 - A Discord Bot token
-- A Lavalink host - (optional)
-- Everything in requirements.txt - (Will automatically install once you run `setup.py`)
+- A Lavalink host - (included but you can use your own)
 
 ## Setup
 
@@ -36,6 +35,16 @@ Run `setup.py` and follow the on-screen instructions!
 - `nextcord is incompatible with discord.py`: This is caused by having both `discord.py` and `nextcord` installed. Uninstall `discord.py` by running `pip uninstall discord.py` and run `setup.py` again. And remove the original wavelink and install the one in the requirements.txt file.
 
 If you still need help join the discord server and i'll try to help you out!
+
+## Credits
+
+[Glowstik](https://www.youtube.com/@glowstik) - for making almost all the code lmfao
+
+[Civo](https://www.youtube.com/@CivoCode) - for coding the welcome system & anime commands 😏
+
+[VoiceMaster](https://github.com/SamSanai/VoiceMaster-Discord-Bot) - the join to create system
+
+[Me!](https://solo.to/wtr) - made the setup system and customized the UI
 
 ## Links
 
