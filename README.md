@@ -40,13 +40,15 @@ If you still need help join the discord server and i'll try to help you out!
 
 ## Credits
 
-[Glowstik](https://www.youtube.com/@glowstik) - for making almost all the code lmfao
+[Glowstik](https://www.youtube.com/@glowstik) - For making almost all the code lmfao
 
-[Civo](https://www.youtube.com/@CivoCode) - for coding the welcome system & anime commands 😏
+[Civo](https://www.youtube.com/@CivoCode) - For coding the welcome system & anime commands 😏
 
-[VoiceMaster](https://github.com/SamSanai/VoiceMaster-Discord-Bot) - the join to create system
+[VoiceMaster](https://github.com/SamSanai/VoiceMaster-Discord-Bot) - The join to create system
 
-[Me!](https://solo.to/wtr) - made the setup system and customized the UI
+[RedCokeDevelopment](https://github.com/RedCokeDevelopment/Teapot.py) - Made the osu command!
+
+[Me!](https://solo.to/wtr) - Made the setup system and customized the UI
 
 ## Links
 
