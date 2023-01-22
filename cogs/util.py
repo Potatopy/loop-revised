@@ -92,6 +92,7 @@ class Util(commands.Cog):
         embed.add_field(name="**Moderation**", value=f"{p}mod help", inline=False)
         embed.add_field(name="**Anime**", value=f"{p}anime help", inline=False)
         embed.add_field(name="**Owner**", value=f"{p}owner help", inline=False)
+        embed.add_field(name="**Osu**", value=f"{p}osu [player name]: Shows The users stats", inline=False)
         embed.set_footer(text="More categories will be added soon!")
         await ctx.send(embed=embed)
 
