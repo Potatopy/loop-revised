@@ -15,8 +15,8 @@ print("""
             © 2023 by h3lped
 """)
 print("[*] Note: You ONLY run this file once. \n")
-TOKEN = input("[?] Your Discord Token: ")
-prefix = input("[?] What would you like your prefix to be: ")
+TOKEN = input("[!] Your Discord Token: ")
+prefix = input("[!] What would you like your prefix to be: ")
 
 lavalink = input("[?] Would you like to use your own lavalink server? (y/n): ")
 if lavalink.lower() == "y" or lavalink.lower() == "yes":
@@ -32,6 +32,8 @@ else:
     print("[!] Please enter a valid option!")
     exit()
 
+osu = input("[!] Input your osu! API key: ")
+
 if TOKEN is None:
     print("Please Insert A Discord Token")
     exit()
@@ -45,17 +47,23 @@ TOKEN={TOKEN}
 PREFIX={prefix}
 
 # Lavalink Config
-LAVALINK_HOST="{lavalink_host}"
+LAVALINK_HOST={lavalink_host}
 LAVALINK_PORT={lavalink_port}
-LAVALINK_PASSWORD="{lavalink_password}"
-"""
-    print("[*] Installing Dependancies...")
+LAVALINK_PASSWORD={lavalink_password}
+
+# Osu! Config
+OSU_API_KEY={osu}"""
+    print("[*] Preparing to uninstall discord.py")
+    os.system('pip uninstall discord.py')
+    time.sleep(3)
+    print("[*] Preparing to install requirements.txt")
     os.system('pip install -r requirements.txt')
     print("\n" * 100)
     print("[*] Dependancies Installed!")
     print("[*] Creating .env file...")
+    time.sleep(3)
     open('./.env', 'w').write(config)
-    print("\n[*] Created .env file!")
+    print("[*] Created .env file!")
     time.sleep(3)
     print("[!] Running the bot...")
     print("[*] Note: From now on only run main.py \n[*] All Settings can be changed in the .env file!")

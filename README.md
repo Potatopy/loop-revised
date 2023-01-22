@@ -4,6 +4,8 @@ This is a revised version of the [loop-bot](https://github.com/Potatopy/loop-bot
 
 bot made by domain#0001 for .gg/loop (at least thats the future vanity)
 
+**Note: This is not a fully completed project, and bugs WILL be present. If you find any, please report them in the support server.
+
 ## Features
 
 - [x] Welcome system
